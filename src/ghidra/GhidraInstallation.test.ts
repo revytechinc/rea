@@ -162,6 +162,8 @@ describe("Ghidra installation inspection", () => {
     ["darwin", "x64", "mac_x86_64"],
     ["darwin", "arm64", "mac_arm_64"],
     ["linux", "arm64", "linux_arm_64"],
+    ["freebsd", "x64", "freebsd_x86_64"],
+    ["freebsd", "arm64", "freebsd_arm_64"],
   ] as const)(
     "accepts %s/%s with the matching distribution or locally built native tool",
     (platform, architecture, nativeDirectory) => {
