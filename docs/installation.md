@@ -475,7 +475,7 @@ copying license secrets into logs, or killing unrelated Hopper processes.
 ## Ghidra
 
 REA connects to an existing Ghidra installation on Linux x64/arm64, macOS x64/arm64,
-or experimental Windows x64 P0.
+FreeBSD x64/arm64, or experimental Windows x64 P0.
 It accepts Ghidra 12.1.x and the 64-bit full JDK declared by that installation's
 `application.java.min` and `application.java.max`. Current 12.1 releases require
 JDK 21 or newer and set no maximum. The bridge is verified with Ghidra 12.1.4

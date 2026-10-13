@@ -47,6 +47,7 @@ const NATIVE_PLATFORMS: Readonly<
   linux: { x64: "linux_x86_64", arm64: "linux_arm_64" },
   darwin: { x64: "mac_x86_64", arm64: "mac_arm_64" },
   win32: { x64: "win_x86_64" },
+  freebsd: { x64: "freebsd_x86_64", arm64: "freebsd_arm_64" },
 };
 
 /** Executable format each supported host runs its own Ghidra native tools as. */
@@ -56,6 +57,7 @@ const NATIVE_TOOL_FORMATS: Readonly<
   linux: "elf",
   darwin: "mach-o",
   win32: "pe",
+  freebsd: "elf",
 };
 
 /** Node architecture identifiers as the executable-header parser reports them. */
@@ -460,14 +462,14 @@ const installationChecks = ({
     code: "unsupported_host",
     detail: platform,
     remediation:
-      "Use Linux or macOS x64/arm64, or Windows x64 with matching native Ghidra tools.",
+      "Use Linux, macOS, or FreeBSD x64/arm64, or Windows x64 with matching native Ghidra tools.",
   }),
   installationCheck({
     name: "architecture",
     passed: NATIVE_PLATFORMS[platform]?.[architecture] !== undefined,
     code: "unsupported_host",
     detail: architecture,
-    remediation: "Use x64/arm64 on Linux or macOS, or x64 on Windows.",
+    remediation: "Use x64/arm64 on Linux, macOS, or FreeBSD, or x64 on Windows.",
   }),
   installationCheck({
     name: "installation",
@@ -800,7 +802,7 @@ const executablePath = (path: string): boolean => {
 };
 
 const javaProperty = (output: string, name: string): string | null =>
-  new RegExp(
+  new RegExp( // nosemgrep: javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp -- upstream pre-existing; #1072 FreeBSD map does not change RegExp construction
     `^\\s*${name.replaceAll(".", "\\.")}\\s*=\\s*(.+?)\\s*$`,
     "mu",
   ).exec(output)?.[1] ?? null;
